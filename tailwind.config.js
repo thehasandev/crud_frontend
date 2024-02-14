@@ -12,6 +12,9 @@ export default {
         'gray': '#D3D3D3',
         'offwhite': '#7A7A7A',
       },
+      fontFamily: {
+        'inter': ['Inter'],
+      },
     },
   },
   plugins: [],
