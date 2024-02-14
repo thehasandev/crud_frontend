@@ -69,7 +69,12 @@ function CreateCrudInput() {
                      <div className='flex gap-5 flex-wrap mt-8'>
                         <div  className='w-[300px] bg-black/90 text-white p-5 rounded-md'>
                             <h1 className='font-semibold text-xl font-inter mb-2'>Lorem ipsum dolor sit amet.</h1>
-                            <h1 className='font-sm text-sm font-inter'>asdfsadfloremasdfasdfdsafsadfasdfsadf</h1>
+                            <h1 className='font-sm text-sm font-inter mb-4'>asdfsadfloremasdfasdfdsafsadfasdfsadf</h1>
+                            <div className='flex gap-x-4'>
+                             <button className='bg-white text-[red] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Delete</button>
+                             <button className='bg-white text-[green] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Edit</button>
+
+                            </div>
                         </div>
       
            
