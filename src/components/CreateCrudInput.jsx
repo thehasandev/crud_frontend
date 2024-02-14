@@ -17,7 +17,7 @@ function CreateCrudInput() {
         }
         alldata()
     }, [render])
-    
+
     const handleSubmit = async () => {
         const data = await axios.post("http://localhost:8000/api/v1/crudroutes/create", {
             name: name,
@@ -35,7 +35,12 @@ function CreateCrudInput() {
     }
 
   
-
+  const handleDelete =async(item)=>{
+    const data = await axios.post("http://localhost:8000/api/v1/crudroutes/delete",{
+        id : item._id
+    })
+    setRender(!render)
+  }
 
 
     return (
@@ -78,7 +83,7 @@ function CreateCrudInput() {
                             <h1 className='font-semibold text-xl font-inter mb-2'>{item.name}</h1>
                             <h1 className='font-sm text-sm font-inter mb-4'>{item.des}</h1>
                             <div className='flex gap-x-4'>
-                                <button className='bg-white text-[red] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Delete</button>
+                                <button onClick={()=>handleDelete(item)} className='bg-white text-[red] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Delete</button>
                                 <button className='bg-white text-[green] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Edit</button>
 
                             </div>
