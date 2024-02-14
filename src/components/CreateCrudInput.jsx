@@ -1,10 +1,26 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 
 function CreateCrudInput() {
     const [name,setName] = useState("")
     const [des,setDes] = useState("")
-    const handleSubmit =()=>{
-        console.log(des,name);
+    const [err,setErr] = useState("")
+    const handleSubmit =async()=>{
+    const data = await axios.post("http://localhost:8000/api/v1/crudroutes/create",{
+        name : name,
+        des : des
+    })
+
+   if(data.data == "Data send"){
+     setName("")
+     setDes("")
+     setErr("")
+   }else if(data.data = "Your all input is required"){
+    setErr("Your all input is required")
+   }
+
+   
+
     }
   return (
     <div>
@@ -13,14 +29,18 @@ function CreateCrudInput() {
                 <div className='w-full md:pl-10'>
                     <div className='mt-6'>
                         <p className='font-inter font-bold text-base text-secondary mb-2'>Name</p>
-                        <input onChange={(e)=>setName(e.target.value)} type="text" name='userName' placeholder='Name here' className='w-[300px] md:w-10/12 border border-gray p-3.5 rounded-[2px]' />
+                        <input value={name} onChange={(e)=>setName(e.target.value)} type="text" name='userName' placeholder='Name here' className='w-[300px] md:w-10/12 border border-gray p-3.5 rounded-[2px]' />
                     </div>
 
 
                     <div className='mt-6'>
                         <p className='font-inter font-bold text-base text-secondary mb-2'>Description</p>
-                        <textarea onChange={(e)=>setDes(e.target.value)} type="text" name='userEmail' placeholder='Enter your Description' className='w-[300px] md:w-10/12 border border-gray p-3.5 rounded-[2px]' />
+                        <textarea value={des} onChange={(e)=>setDes(e.target.value)} type="text" name='userEmail' placeholder='Enter your Description' className='w-[300px] md:w-10/12 border border-gray p-3.5 rounded-[2px]' />
                     </div>
+                    {
+                        err &&
+                        <p className='text-[red]'>{err}</p>
+                    }
 
 
                     <div className="flexjustify-center md:justify-start">
