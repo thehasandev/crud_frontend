@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
@@ -6,7 +7,17 @@ function CreateCrudInput() {
     const [des, setDes] = useState("")
     const [alldata, setAlldata] = useState([])
     const [err, setErr] = useState("")
-
+    const [render, setRender] = useState(true)
+  
+    useEffect(() => {
+        const alldata = async () => {
+            const data = await axios.get("http://localhost:8000/api/v1/crudroutes/alldata")
+            setAlldata(data.data)
+          
+        }
+        alldata()
+    }, [render])
+    
     const handleSubmit = async () => {
         const data = await axios.post("http://localhost:8000/api/v1/crudroutes/create", {
             name: name,
@@ -14,24 +25,17 @@ function CreateCrudInput() {
         })
 
         if (data.data == "Data send") {
+            setRender(!render)
             setName("")
             setDes("")
             setErr("")
         } else if (data.data = "Your all input is required") {
             setErr("Your all input is required")
         }
-
-
-
     }
 
-    useEffect(() => {
-        const alldata = async () => {
-            const data = await axios.get("http://localhost:8000/api/v1/crudroutes/alldata")
-            setAlldata(data.data)
-        }
-        alldata()
-    }, [])
+  
+
 
 
     return (
@@ -65,23 +69,29 @@ function CreateCrudInput() {
 
             </div>
             <div>
-             
-                     <div className='flex gap-5 flex-wrap mt-8'>
-                        <div  className='w-[300px] bg-black/90 text-white p-5 rounded-md'>
-                            <h1 className='font-semibold text-xl font-inter mb-2'>Lorem ipsum dolor sit amet.</h1>
-                            <h1 className='font-sm text-sm font-inter mb-4'>asdfsadfloremasdfasdfdsafsadfasdfsadf</h1>
+
+                <div className='flex gap-5 flex-wrap mt-8'>
+                    {
+                        alldata &&
+                        alldata.map((item,index)=>(
+                        <div className='w-[300px] bg-black/90 text-white p-5 rounded-md'>
+                            <h1 className='font-semibold text-xl font-inter mb-2'>{item.name}</h1>
+                            <h1 className='font-sm text-sm font-inter mb-4'>{item.des}</h1>
                             <div className='flex gap-x-4'>
-                             <button className='bg-white text-[red] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Delete</button>
-                             <button className='bg-white text-[green] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Edit</button>
+                                <button className='bg-white text-[red] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Delete</button>
+                                <button className='bg-white text-[green] font-inter text-base font-semibold px-4 py-2 rounded-sm'>Edit</button>
 
                             </div>
                         </div>
-      
-           
 
-                     </div>
-                
-                
+                        ))
+                    }
+
+
+
+                </div>
+
+
             </div>
         </div>
     )
